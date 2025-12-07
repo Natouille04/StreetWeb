@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "remixicon/fonts/remixicon.css";
+@import "./animations/ZoomIn.css";
+
+.background-grass {
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
