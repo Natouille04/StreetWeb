@@ -1,13 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'; 
 
 axios.defaults.withCredentials = true;
+
+const xsrfToken = Cookies.get('XSRF-TOKEN');
+
+console.log(xsrfToken);
+
+if (xsrfToken) {
+    axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
+}
 
 function Footer() {
     const navigate = useNavigate();
     const LogOut = async () => {
         try {
+            axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
             await axios.post('http://localhost:8000/logout');
             navigate('/login');
 

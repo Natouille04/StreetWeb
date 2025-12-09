@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from "react-router-dom"; // Use react-router-dom
+import { useNavigate } from "react-router-dom";
 import { Footer } from '../components/footer.jsx';
 import { isUserConnected } from '../modules/isUserConnected.jsx';
+import { FriendsList } from '../components/FriendsList.jsx';
 
-import plazaMusic from '../assets/music/Plaza-Music-3.mp3'; 
+import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
 
 function Home() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const audioRef = useRef(null); 
+    const audioRef = useRef(null);
 
     useEffect(() => {
         audioRef.current = new Audio(plazaMusic);
@@ -19,7 +20,7 @@ function Home() {
         return () => {
             if (audioRef.current) {
                 audioRef.current.pause();
-                audioRef.current.src = ''; 
+                audioRef.current.src = '';
             }
         };
     }, []);
@@ -30,8 +31,8 @@ function Home() {
         if (isPlaying) {
             audioRef.current.pause();
             setIsPlaying(false);
-        } 
-        
+        }
+
         else {
             audioRef.current.play()
                 .then(() => setIsPlaying(true))
@@ -54,7 +55,9 @@ function Home() {
         checkAuthAndRedirect();
     }, [navigate]);
 
-    togglePlay();
+    useEffect(() => {
+        togglePlay();
+    }, []);
 
     if (isLoading) {
         return <div>Chargement de la page...</div>;
@@ -63,7 +66,7 @@ function Home() {
     return (
         <div className="h-screen bg-white w-full">
             <div className="w-full h-full bg-green-500 background-grass">
-
+                <FriendsList />
             </div>
             <Footer />
         </div>

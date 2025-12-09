@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 function Register() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        username: '', 
+        username: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -39,7 +39,7 @@ function Register() {
         if (!formData.password) {
             newErrors.password = "Le mot de passe est requis.";
         } else if (formData.password.length < 8) {
-             newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
+            newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
         }
         if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
@@ -69,10 +69,12 @@ function Register() {
                 password_confirmation: formData.confirmPassword
             });
 
-            if (response.status === 201 || response.status === 200) {
+            if (response.status === 201 || response.status === 200 || response.status === 204) {
                 console.log("Inscription réussie. Redirection vers Home.");
                 navigate("/");
-            } else {
+            }
+
+            else {
                 setErrors({ general: "Réponse du serveur inattendue lors de l'inscription." });
             }
 
@@ -90,7 +92,7 @@ function Register() {
                     }
                     if (validationErrors.password) {
                         newErrors.password = validationErrors.password[0];
-                        newErrors.confirmPassword = newErrors.password; 
+                        newErrors.confirmPassword = newErrors.password;
                     }
                     setErrors(newErrors);
                     setErrors({ general: generalMessage });
