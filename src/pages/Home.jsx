@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+
 import { Footer } from '../components/footer.jsx';
-import { isUserConnected } from '../modules/isUserConnected.jsx';
 import { FriendsList } from '../components/FriendsList.jsx';
+import { PopUp } from '../components/PopUp.jsx';
+import { QrCode } from '../components/QrCode.jsx';
+
+import { isUserConnected } from '../modules/isUserConnected.jsx';
 
 import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
 
@@ -69,6 +73,12 @@ function Home() {
                 <FriendsList />
             </div>
             <Footer />
+
+            <PopUp title='Add friends' style='h-50/100'>
+                <div className='h-50/100'>
+                    <QrCode data="test" />
+                </div>
+            </PopUp>
         </div>
     );
 }

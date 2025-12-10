@@ -30,17 +30,17 @@ function Footer() {
 
     return (
         <div className="w-full h-10/100 bg-[#2f785d]/60 absolute bottom-0 drop-shadow-xl/50">
-            <nav className='flex justify-between overflow-visible px-2'>
+            <nav className='h-full flex justify-between overflow-visible px-2'>
 
-                <i className="ri-gamepad-fill text-white text-3xl"></i>
-                <i className="ri-user-community-fill text-white text-3xl"></i>
+                <i className="h-full ri-gamepad-fill text-white text-3xl"></i>
+                <i className="h-full ri-user-community-fill text-white text-3xl"></i>
 
                 <div className="w-20 h-20 flex justify-center items-center bg-white rounded-full -translate-y-9">
                     <p className="flex items-center text-3xl pb-1">+</p>
                 </div>
 
-                <i className="ri-user-fill text-white text-3xl"></i>
-                <i onClick={() => LogOut()} className="ri-logout-box-fill text-white text-3xl"></i>
+                <i className=" h-full ri-user-fill text-white text-3xl"></i>
+                <i onClick={() => LogOut()} className=" h-full ri-logout-box-fill text-white text-3xl"></i>
             </nav>
         </div>
     );
