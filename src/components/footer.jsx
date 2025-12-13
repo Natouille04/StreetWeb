@@ -13,7 +13,7 @@ if (xsrfToken) {
     axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
 }
 
-function Footer() {
+function Footer({ setPopupOpen }) {
     const navigate = useNavigate();
     const LogOut = async () => {
         try {
@@ -35,11 +35,11 @@ function Footer() {
                 <i className="h-full ri-gamepad-fill text-white text-3xl"></i>
                 <i className="h-full ri-user-community-fill text-white text-3xl"></i>
 
-                <div className="w-20 h-20 flex justify-center items-center bg-white rounded-full -translate-y-9">
+                <div className="w-20 h-20 flex justify-center items-center bg-white rounded-full -translate-y-9" onClick={() => setPopupOpen(true)}>
                     <p className="flex items-center text-3xl pb-1">+</p>
                 </div>
 
-                <i className=" h-full ri-user-fill text-white text-3xl"></i>
+                <i className="h-full ri-user-fill text-white text-3xl"></i>
                 <i onClick={() => LogOut()} className=" h-full ri-logout-box-fill text-white text-3xl"></i>
             </nav>
         </div>

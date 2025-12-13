@@ -28,7 +28,7 @@ function FriendsList() {
     }
 
     return (
-        <div className='grid grid-cols-3 gap-4 p-3'>
+        <div className='grid grid-cols-3 gap-x-10 gap-y-5 p-3'>
             {friends.map(user => (
                 <MiiRender 
                     key={user.id}

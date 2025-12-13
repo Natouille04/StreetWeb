@@ -7,13 +7,16 @@ import { PopUp } from '../components/PopUp.jsx';
 import { QrCode } from '../components/QrCode.jsx';
 
 import { isUserConnected } from '../modules/isUserConnected.jsx';
+import { getUserInfo } from '../modules/getUserInfo.jsx';
 
 import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
 
 function Home() {
     const navigate = useNavigate();
+
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isPopupOpen, setPopupOpen] = useState(false);
 
     const audioRef = useRef(null);
 
@@ -63,22 +66,38 @@ function Home() {
         togglePlay();
     }, []);
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const userData = await getUserInfo();
+
+            if (userData) {
+                console.log("Here is the user object:", userData);
+            } 
+            
+            else {
+                console.log("Failed to get user data.");
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     if (isLoading) {
         return <div>Chargement de la page...</div>;
     }
 
     return (
         <div className="h-screen bg-white w-full">
-            <div className="w-full h-full bg-green-500 background-grass">
+            <div className="w-full h-full bg-green-500 background-grass flex justify-center items-start">
                 <FriendsList />
             </div>
-            <Footer />
+            <Footer setPopupOpen={setPopupOpen} />
 
-            <PopUp title='Add friends' style='h-50/100'>
-                <div className='h-50/100'>
-                    <QrCode data="test" />
-                </div>
-            </PopUp>
+            {isPopupOpen && (
+                <PopUp title="Add friends" onClose={() => setPopupOpen(false)}>
+                    <QrCode data={user.name} size='1080' />
+                </PopUp>
+            )}
         </div>
     );
 }

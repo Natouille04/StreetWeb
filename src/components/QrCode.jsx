@@ -18,9 +18,6 @@ function QrCode({ data, size }) {
                 background: '#ffffff', 
                 level: 'H' 
             });
-
-            console.log(`QR Code generated for: ${data}`);
-
         } 
         
         else if (canvasRef.current) {
