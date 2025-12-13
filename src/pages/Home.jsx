@@ -14,11 +14,18 @@ import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
 function Home() {
     const navigate = useNavigate();
 
+	const [selectedFile, setSelectedFile] = useState(null);
+
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [user, setUser] = useState(null);
 
     const audioRef = useRef(null);
+
+    const onFileChange = (event) => {
+		setSelectedFile(event.target.files[0]);
+    }
 
     useEffect(() => {
         audioRef.current = new Audio(plazaMusic);
@@ -71,7 +78,7 @@ function Home() {
             const userData = await getUserInfo();
 
             if (userData) {
-                console.log("Here is the user object:", userData);
+                setUser(userData);
             } 
             
             else {
@@ -95,7 +102,21 @@ function Home() {
 
             {isPopupOpen && (
                 <PopUp title="Add friends" onClose={() => setPopupOpen(false)}>
-                    <QrCode data={user.name} size='1080' />
+                    <QrCode data={user.identifier} size='1080' />
+                    <div className='flex flex-col items-center'>
+                        <p className='font-bold text-xl'>--- Scan your friend's code ---</p>
+
+                        <button className='mt-4 mb-1 text-lg active:text-red-500'>Scan with camera</button>
+
+                        { selectedFile && (
+                            <div>
+                                <img src={URL.createObjectURL(selectedFile)}></img>
+                            </div>
+                        )}
+
+                        <input id='qr-input' type='file' className='hidden' accept='.jpg, .png, .webp' onChange={onFileChange}></input >
+                        <label htmlFor="qr-input" className='text-lg active:text-red-500'>Import as a file</label>
+                    </div>
                 </PopUp>
             )}
         </div>

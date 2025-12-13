@@ -54,7 +54,6 @@ function Login() {
             });
 
             if (response.status === 200 || response.status === 204) { 
-                console.log("Connexion réussie via session cookie.");
                 navigate("/"); 
             } 
             

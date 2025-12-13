@@ -7,8 +7,6 @@ axios.defaults.withCredentials = true;
 
 const xsrfToken = Cookies.get('XSRF-TOKEN');
 
-console.log(xsrfToken);
-
 if (xsrfToken) {
     axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
 }

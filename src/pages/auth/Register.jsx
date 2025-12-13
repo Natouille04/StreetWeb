@@ -70,7 +70,6 @@ function Register() {
             });
 
             if (response.status === 201 || response.status === 200 || response.status === 204) {
-                console.log("Inscription réussie. Redirection vers Home.");
                 navigate("/");
             }
 

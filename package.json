@@ -17,6 +17,7 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "js-cookie": "^3.0.5",
+    "qr-scanner": "^1.4.2",
     "qrcode.js": "^0.0.1",
     "qrious": "^4.0.2",
     "react": "^19.2.0",
