@@ -24,7 +24,8 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.10.1",
     "remixicon": "^4.7.0",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "vite-plugin-mkcert": "^1.17.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

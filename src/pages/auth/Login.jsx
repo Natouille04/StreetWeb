@@ -48,11 +48,11 @@ function Login() {
         setErrors({});
 
         try {
-            await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+            await axios.get('http://192.168.1.142:8000/sanctum/csrf-cookie', {
                 withCredentials: true
             });
             
-            const response = await axios.post('http://127.0.0.1:8000/login', {
+            const response = await axios.post('http://192.168.1.142:8000/login', {
                 email: formData.email,
                 password: formData.password
             });

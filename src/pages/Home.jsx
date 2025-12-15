@@ -5,6 +5,7 @@ import { Footer } from '../components/footer.jsx';
 import { FriendsList } from '../components/FriendsList.jsx';
 import { PopUp } from '../components/PopUp.jsx';
 import { QrCode } from '../components/QrCode.jsx';
+import { CameraScanner } from '../components/CameraScanner.jsx';
 
 import { isUserConnected } from '../modules/isUserConnected.jsx';
 import { getUserInfo } from '../modules/getUserInfo.jsx';
@@ -20,7 +21,10 @@ function Home() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
+
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isScannerOpen, setScannerOpen] = useState(false);
+
     const [user, setUser] = useState(null);
 
     const audioRef = useRef(null);
@@ -112,15 +116,45 @@ function Home() {
 
             {isPopupOpen && (
                 <PopUp title="Add friends" onClose={() => setPopupOpen(false)}>
-                    <QrCode data={user.identifier} size='1080' />
-                    <div className='flex flex-col items-center'>
-                        <p className='font-bold text-xl'>--- Scan your friend's code ---</p>
+                    {!isScannerOpen && (
+                        <>
+                            <QrCode data={user.identifier} size='1080' />
+                            <div className='flex flex-col items-center'>
+                                <p className='font-bold text-xl'>--- Scan your friend's code ---</p>
 
-                        <button className='mt-4 mb-1 text-lg active:text-red-500'>Scan with camera</button>
+                                <button
+                                    className='mt-4 mb-1 text-lg active:text-red-500'
+                                    onClick={() => setScannerOpen(true)}
+                                >
+                                    Scan with camera
+                                </button>
 
-                        <input id='qr-input' type='file' className='hidden' accept='image/*, .jpg, .png, .webp' onChange={onFileChange}></input >
-                        <label htmlFor="qr-input" className='text-lg active:text-red-500'>Import as a file</label>
-                    </div>
+                                <input
+                                    id='qr-input'
+                                    type='file'
+                                    className='hidden'
+                                    accept='image/*, .jpg, .png, .webp'
+                                    onChange={onFileChange}
+                                />
+                                <label htmlFor="qr-input" className='text-lg active:text-red-500'>
+                                    Import as a file
+                                </label>
+                            </div>
+                        </>
+                    )}
+
+                    {isScannerOpen && (
+                        <>
+                            <CameraScanner onDetected={(result) => addFriend(result)} />
+
+                            <button
+                                className='mt-4 mb-1 text-lg active:text-red-500'
+                                onClick={() => setScannerOpen(false)}
+                            >
+                                Back
+                            </button>
+                        </>
+                    )}
                 </PopUp>
             )}
         </div>
