@@ -8,13 +8,15 @@ import { QrCode } from '../components/QrCode.jsx';
 
 import { isUserConnected } from '../modules/isUserConnected.jsx';
 import { getUserInfo } from '../modules/getUserInfo.jsx';
+import { scanCodeFile } from '../modules/scanCodeFile.jsx';
+import { addFriend } from '../modules/addFriend.jsx';
 
 import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
 
 function Home() {
     const navigate = useNavigate();
 
-	const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -24,8 +26,16 @@ function Home() {
     const audioRef = useRef(null);
 
     const onFileChange = (event) => {
-		setSelectedFile(event.target.files[0]);
-    }
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setSelectedFile(file);
+        scanCodeFile(file)
+            .then(result => {
+                console.log("QR Code Text:", result);
+                addFriend(result);
+            })
+    };
 
     useEffect(() => {
         audioRef.current = new Audio(plazaMusic);
@@ -79,8 +89,8 @@ function Home() {
 
             if (userData) {
                 setUser(userData);
-            } 
-            
+            }
+
             else {
                 console.log("Failed to get user data.");
             }
@@ -108,13 +118,7 @@ function Home() {
 
                         <button className='mt-4 mb-1 text-lg active:text-red-500'>Scan with camera</button>
 
-                        { selectedFile && (
-                            <div>
-                                <img src={URL.createObjectURL(selectedFile)}></img>
-                            </div>
-                        )}
-
-                        <input id='qr-input' type='file' className='hidden' accept='.jpg, .png, .webp' onChange={onFileChange}></input >
+                        <input id='qr-input' type='file' className='hidden' accept='image/*, .jpg, .png, .webp' onChange={onFileChange}></input >
                         <label htmlFor="qr-input" className='text-lg active:text-red-500'>Import as a file</label>
                     </div>
                 </PopUp>

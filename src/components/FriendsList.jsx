@@ -24,7 +24,7 @@ function FriendsList() {
     }, []);
 
     if (friends.length === 0) {
-        return <div className='p-3'>No friends :(</div>;
+        return;
     }
 
     return (

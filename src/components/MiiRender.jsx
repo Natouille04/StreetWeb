@@ -12,7 +12,7 @@ function base64ToArrayBuffer(base64) {
 function MiiRender({ miiData = null, name}) {
     if (miiData == null) {
         return (
-            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50">
+            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50 ZoomIn">
                 <div className="w-85/100 h-85/100 bg-white rounded-lg">
                     <img className="h-full w-full" src="images/BaseMiiHead.png" alt={name}></img>
                 </div>
@@ -26,7 +26,7 @@ function MiiRender({ miiData = null, name}) {
         const studioUrl = mii.studioUrl();
 
         return (
-            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50">
+            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50 ZoomIn">
                 <div className="w-85/100 h-85/100 bg-white rounded-lg">
                     <img className="h-full w-full" src={studioUrl} alt={name}></img>
                 </div>

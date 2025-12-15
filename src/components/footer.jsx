@@ -1,30 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; 
 
 axios.defaults.withCredentials = true;
 
-const xsrfToken = Cookies.get('XSRF-TOKEN');
-
-if (xsrfToken) {
-    axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
-}
-
 function Footer({ setPopupOpen }) {
     const navigate = useNavigate();
+
     const LogOut = async () => {
         try {
-            axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken;
-            await axios.post('http://localhost:8000/logout');
+            await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {withCredentials: true});
+            await axios.post('http://127.0.0.1:8000/logout', {withCredentials: true});
             navigate('/login');
+        }
 
-        } 
-        
         catch (error) {
             console.error('Logout failed:', error.response?.data || error.message);
         }
-    }
+    };
 
     return (
         <div className="w-full h-10/100 bg-[#2f785d]/60 absolute bottom-0 drop-shadow-xl/50">
