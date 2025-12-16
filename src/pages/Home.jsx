@@ -25,6 +25,12 @@ function Home() {
 
     const [user, setUser] = useState(null);
 
+    const [reloadFriendsKey, setReloadFriendsKey] = useState(0);
+
+    const triggerFriendsReload = () => {
+        setReloadFriendsKey(prevKey => prevKey + 1);
+    };
+
     const onFileChange = useCallback((event) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -34,7 +40,9 @@ function Home() {
         scanCodeFile(file)
             .then(result => {
                 console.log("QR Code Text:", result);
-                addFriend(result);
+                addFriend(result).then(() => {
+                    triggerFriendsReload()
+                });
             })
     }, []);
 
@@ -108,7 +116,13 @@ function Home() {
 
                     {isScannerOpen && (
                         <>
-                            <CameraScanner onDetected={(result) => addFriend(result)} />
+                            <CameraScanner onDetected={(result) => {
+                                addFriend(result).then(() => {
+                                    triggerFriendsReload();
+                                });
+                                setScannerOpen(false)
+                                setPopupOpen(false)
+                            }} />
 
                             <button
                                 className='mt-4 mb-1 text-lg active:text-red-500'
