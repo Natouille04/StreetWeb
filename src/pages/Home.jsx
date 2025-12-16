@@ -32,18 +32,20 @@ function Home() {
     };
 
     const onFileChange = useCallback((event) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        setSelectedFile(file);
-
         scanCodeFile(file)
             .then(result => {
                 console.log("QR Code Text:", result);
-                addFriend(result).then(() => {
-                    triggerFriendsReload()
-                });
+                return addFriend(result);
             })
+            .then(() => {
+                console.log("Ami ajouté avec succès.");
+            })
+            .catch(error => {
+                console.error("Erreur lors de l'ajout de l'ami:", error);
+            })
+            .finally(() => {
+                triggerFriendsReload();
+            });
     }, []);
 
     useEffect(() => {
@@ -117,9 +119,14 @@ function Home() {
                     {isScannerOpen && (
                         <>
                             <CameraScanner onDetected={(result) => {
-                                addFriend(result).then(() => {
-                                    triggerFriendsReload();
-                                });
+                                addFriend(result)
+                                    .catch(error => {
+                                        console.error("Erreur lors de l'ajout via scanner:", error);
+                                    })
+                                    .finally(() => {
+                                        triggerFriendsReload();
+                                    });
+
                                 setScannerOpen(false)
                                 setPopupOpen(false)
                             }} />
