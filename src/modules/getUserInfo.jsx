@@ -7,22 +7,25 @@ axios.defaults.withCredentials = true;
  */
 
 export async function getUserInfo(identifier = null) {
-    if (identifier == null) {
-        try {
-            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
-                withCredentials: true
-            });
+    if (identifier != null) {
+        return null; 
+    }
 
-            const response = await axios.get('https://backend.streetweb.fr/api/user', {
-                withCredentials: true
-            });
-            return response.data;
-        }
+    try {
+        await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', { 
+            withCredentials: true 
+        });
 
-        catch (error) {
-            const status = error.response?.status || 'N/A';
-            console.log(`Utilisateur non connecté (statut ${status}).`);
-            return null;
-        }
+        const response = await axios.get('https://backend.streetweb.fr/api/user', { 
+            withCredentials: true
+        });
+
+        return response.data;
+    } 
+    
+    catch (error) {
+        const status = error.response?.status || 'N/A';
+        console.log(`Utilisateur non connecté (statut ${status}).`);
+        return null;
     }
 }
