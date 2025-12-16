@@ -60,7 +60,7 @@ function Register() {
         setErrors({});
 
         try {
-            await axios.get('https://backend.streetweb.fr/csrf-cookie', {
+            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
                 withCredentials: true
             });
 
