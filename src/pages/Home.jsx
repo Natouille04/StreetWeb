@@ -12,8 +12,6 @@ import { getUserInfo } from '../modules/getUserInfo.jsx';
 import { scanCodeFile } from '../modules/scanCodeFile.jsx';
 import { addFriend } from '../modules/addFriend.jsx';
 
-import plazaMusic from '../assets/music/Plaza-Music-3.mp3';
-
 function Home() {
     const navigate = useNavigate();
 
@@ -26,8 +24,6 @@ function Home() {
     const [isScannerOpen, setScannerOpen] = useState(false);
 
     const [user, setUser] = useState(null);
-
-    const audioRef = useRef(null);
 
     const onFileChange = useCallback((event) => {
         const file = event.target.files?.[0];
@@ -43,34 +39,6 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        audioRef.current = new Audio(plazaMusic);
-        audioRef.current.loop = true;
-
-        return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.src = '';
-            }
-        };
-    }, []);
-
-    const togglePlay = useCallback(() => {
-        if (!audioRef.current) return;
-
-        if (isPlaying) {
-            audioRef.current.pause();
-            setIsPlaying(false);
-        }
-        else {
-            audioRef.current.play()
-                .then(() => setIsPlaying(true))
-                .catch(error => {
-                    console.error("Audio playback failed (Autoplay blocked or other error):", error);
-                });
-        }
-    }, [isPlaying]); 
-
-    useEffect(() => {
         const checkAuthAndRedirect = async () => {
             const connected = await isUserConnected();
             setIsLoading(false);
@@ -82,10 +50,6 @@ function Home() {
         };
         checkAuthAndRedirect();
     }, [navigate]);
-
-    useEffect(() => {
-        togglePlay();
-    }, [togglePlay]);
 
     useEffect(() => {
         const fetchUserData = async () => {
