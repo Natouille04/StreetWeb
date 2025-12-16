@@ -6,7 +6,7 @@ export async function getUserFriends() {
     const userId = userInfo.id;
 
     try {
-        const response = await axios.get('http://192.168.1.142:8000/api/relations/' + userId);
+        const response = await axios.get('https://backend.streetweb.fr/api/relations/' + userId);
         return response;
     }
     

@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 
 export async function isUserConnected() {
     try {
-        const response = await axios.get('http://192.168.1.142:8000/api/user');
+        const response = await axios.get('https://backend.streetweb.fr/api/user');
         return true;
     } 
     

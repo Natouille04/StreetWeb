@@ -12,7 +12,7 @@ export default defineConfig({
   base: "/",
   server: {
     https: true,
-    host: '192.168.1.142',
+    host: 'streetweb.fr',
     port: 5173,
   },
 })

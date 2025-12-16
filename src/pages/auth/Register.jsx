@@ -60,11 +60,11 @@ function Register() {
         setErrors({});
 
         try {
-            await axios.get('http://192.168.1.142:8000/sanctum/csrf-cookie', {
+            await axios.get('https://backend.streetweb.fr/csrf-cookie', {
                 withCredentials: true
             });
 
-            const response = await axios.post('http://192.168.1.142:8000/register', {
+            const response = await axios.post('https://backend.streetweb.fr/register', {
                 name: formData.username,
                 email: formData.email,
                 password: formData.password,

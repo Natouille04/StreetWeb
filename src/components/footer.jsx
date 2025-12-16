@@ -9,8 +9,8 @@ function Footer({ setPopupOpen }) {
 
     const LogOut = async () => {
         try {
-            await axios.get('http://192.168.1.142:8000/sanctum/csrf-cookie', {withCredentials: true});
-            await axios.post('http://192.168.1.142:8000/logout', {withCredentials: true});
+            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {withCredentials: true});
+            await axios.post('https://backend.streetweb.fr/logout', {withCredentials: true});
             navigate('/login');
         }
 
