@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { Footer } from '../components/footer.jsx';
@@ -29,17 +29,18 @@ function Home() {
 
     const audioRef = useRef(null);
 
-    const onFileChange = (event) => {
+    const onFileChange = useCallback((event) => {
         const file = event.target.files?.[0];
         if (!file) return;
 
         setSelectedFile(file);
+
         scanCodeFile(file)
             .then(result => {
                 console.log("QR Code Text:", result);
                 addFriend(result);
             })
-    };
+    }, []);
 
     useEffect(() => {
         audioRef.current = new Audio(plazaMusic);
@@ -53,14 +54,13 @@ function Home() {
         };
     }, []);
 
-    const togglePlay = () => {
+    const togglePlay = useCallback(() => {
         if (!audioRef.current) return;
 
         if (isPlaying) {
             audioRef.current.pause();
             setIsPlaying(false);
         }
-
         else {
             audioRef.current.play()
                 .then(() => setIsPlaying(true))
@@ -68,7 +68,7 @@ function Home() {
                     console.error("Audio playback failed (Autoplay blocked or other error):", error);
                 });
         }
-    };
+    }, [isPlaying]); 
 
     useEffect(() => {
         const checkAuthAndRedirect = async () => {
@@ -85,7 +85,7 @@ function Home() {
 
     useEffect(() => {
         togglePlay();
-    }, []);
+    }, [togglePlay]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -94,7 +94,6 @@ function Home() {
             if (userData) {
                 setUser(userData);
             }
-
             else {
                 console.log("Failed to get user data.");
             }
@@ -116,7 +115,7 @@ function Home() {
 
             {isPopupOpen && (
                 <PopUp title="Add friends" onClose={() => setPopupOpen(false)}>
-                    {!isScannerOpen && (
+                    {!isScannerOpen && user && (
                         <>
                             <QrCode data={user.identifier} size='1080' />
                             <div className='flex flex-col items-center'>
