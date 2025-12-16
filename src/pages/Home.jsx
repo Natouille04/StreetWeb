@@ -81,7 +81,7 @@ function Home() {
     return (
         <div className="h-screen bg-white w-full">
             <div className="w-full h-full bg-green-500 background-grass flex justify-center items-start">
-                <FriendsList />
+                <FriendsList reloadKey={reloadFriendsKey} />
             </div>
             <Footer setPopupOpen={setPopupOpen} />
 
