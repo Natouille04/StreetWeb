@@ -9,7 +9,13 @@ axios.defaults.withCredentials = true;
 export async function getUserInfo(identifier = null) {
     if (identifier == null) {
         try {
-            const response = await axios.get('https://backend.streetweb.fr/api/user');
+            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
+                withCredentials: true
+            });
+
+            const response = await axios.get('https://backend.streetweb.fr/api/user', {
+                withCredentials: true
+            });
             return response.data;
         }
 
