@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getUserInfo } from "./getUserInfo";
 
 axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
+
 
 async function addFriend(identifier) {
     await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {

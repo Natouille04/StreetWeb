@@ -4,7 +4,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://backend.streetweb.fr/';
 axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
+
 
 function Register() {
     const navigate = useNavigate();
