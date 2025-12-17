@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+axios.defaults.baseURL = 'https://backend.streetweb.fr/';
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
@@ -49,24 +50,25 @@ function Login() {
         setErrors({});
 
         try {
-            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
+            await axios.get('/sanctum/csrf-cookie', {
                 withCredentials: true
-            });
-            
-            const response = await axios.post('https://backend.streetweb.fr/login', {
-                email: formData.email,
-                password: formData.password
-            });
+            }).then(async () => {
+                const response = await axios.post('/login', {
+                    email: formData.email,
+                    password: formData.password
+                });
 
-            if (response.status === 200 || response.status === 204) {
-                navigate("/");
-            }
+                if (response.status === 200 || response.status === 204) {
+                    navigate("/");
+                }
 
-            else {
-                setErrors({ general: "Réponse du serveur inattendue." });
-            }
+                else {
+                    setErrors({ general: "Réponse du serveur inattendue." });
+                }
+            })
+        }
 
-        } catch (error) {
+        catch (error) {
             if (error.response) {
                 if (error.response.status === 422) {
                     setErrors({ general: "Les données fournies ne sont pas valides." });

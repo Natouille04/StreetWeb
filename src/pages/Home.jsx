@@ -149,7 +149,7 @@ function Home() {
                 </PopUp>
             )}
 
-            <ProfilePopUp />
+            {/* <ProfilePopUp /> */}
         </div>
     );
 }

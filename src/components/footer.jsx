@@ -31,7 +31,7 @@ function Footer({ setPopupOpen }) {
                     <p className="flex items-center text-3xl pb-1">+</p>
                 </div>
 
-                <i className="h-full ri-user-fill text-white text-3xl"></i>
+                <i onClick={() => setProfilePopupOpen(true)} className="h-full ri-user-fill text-white text-3xl"></i>
                 <i onClick={() => LogOut()} className=" h-full ri-logout-box-fill text-white text-3xl"></i>
             </nav>
         </div>

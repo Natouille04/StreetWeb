@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+axios.defaults.baseURL = 'https://backend.streetweb.fr/';
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
@@ -61,11 +62,11 @@ function Register() {
         setErrors({});
 
         try {
-            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
+            await axios.get('/sanctum/csrf-cookie', {
                 withCredentials: true
             });
 
-            const response = await axios.post('https://backend.streetweb.fr/register', {
+            const response = await axios.post('/register', {
                 name: formData.username,
                 email: formData.email,
                 password: formData.password,
