@@ -12,11 +12,11 @@ export async function getUserInfo(identifier = null) {
     }
 
     try {
-        await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', { 
+        await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', { 
             withCredentials: true 
         });
 
-        const response = await axios.get('https://backend.streetweb.fr/api/user', { 
+        const response = await axios.get('http://127.0.0.1:8000/api/user', { 
             withCredentials: true
         });
 
