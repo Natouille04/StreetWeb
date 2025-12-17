@@ -6,7 +6,7 @@ export async function getUserFriends() {
     const userId = userInfo.id;
 
     try {
-        await axios.get('https://backend.streetweb.fr/anctum/csrf-cookie', {
+        await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
             withCredentials: true
         });
 
