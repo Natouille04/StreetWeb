@@ -15,8 +15,6 @@ import { addFriend } from '../modules/addFriend.jsx';
 function Home() {
     const navigate = useNavigate();
 
-    const [selectedFile, setSelectedFile] = useState(null);
-
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -32,6 +30,13 @@ function Home() {
     };
 
     const onFileChange = useCallback((event) => {
+        const file = event.target.files[0];
+
+        if (!file) {
+            console.log("No file was selected.");
+            return;
+        }
+        
         scanCodeFile(file)
             .then(result => {
                 console.log("QR Code Text:", result);
@@ -39,6 +44,7 @@ function Home() {
             })
             .then(() => {
                 console.log("Ami ajouté avec succès.");
+                setPopupOpen(false); 
             })
             .catch(error => {
                 console.error("Erreur lors de l'ajout de l'ami:", error);
