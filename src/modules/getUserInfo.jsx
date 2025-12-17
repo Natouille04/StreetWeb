@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 /**
  * @returns {Promise<object|null>} Resolves with user data on success, or null on failure.

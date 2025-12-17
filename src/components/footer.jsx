@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 function Footer({ setPopupOpen }) {
     const navigate = useNavigate();

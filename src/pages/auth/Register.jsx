@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 function Register() {
     const navigate = useNavigate();

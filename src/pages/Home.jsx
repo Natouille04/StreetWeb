@@ -6,6 +6,7 @@ import { FriendsList } from '../components/FriendsList.jsx';
 import { PopUp } from '../components/PopUp.jsx';
 import { QrCode } from '../components/QrCode.jsx';
 import { CameraScanner } from '../components/CameraScanner.jsx';
+import { ProfilePopUp } from '../components/PopUp.jsx';
 
 import { isUserConnected } from '../modules/isUserConnected.jsx';
 import { getUserInfo } from '../modules/getUserInfo.jsx';
@@ -147,6 +148,8 @@ function Home() {
                     )}
                 </PopUp>
             )}
+
+            <ProfilePopUp />
         </div>
     );
 }
