@@ -56,19 +56,6 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        const checkAuthAndRedirect = async () => {
-            const connected = await isUserConnected();
-            setIsLoading(false);
-
-            if (connected === false) {
-                console.log("chiasse: Utilisateur non connecté. Redirection...");
-                navigate('/login');
-            }
-        };
-        checkAuthAndRedirect();
-    }, [navigate]);
-
-    useEffect(() => {
         const fetchUserData = async () => {
             const userData = await getUserInfo();
 

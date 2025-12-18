@@ -9,16 +9,19 @@ export async function isUserConnected() {
             withCredentials: true 
         });
 
+        console.log("CSRF recupérée")
+
         const response = await axios.get('https://backend.streetweb.fr/api/user', { 
             withCredentials: true 
         });
+
+        console.log("api/user appelée");
         
         if (response.data) {
              return true; 
         }
 
         return false;
-
     } 
     
     catch (error) {
