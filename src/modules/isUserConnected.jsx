@@ -9,7 +9,7 @@ export async function isUserConnected() {
             withCredentials: true 
         });
 
-        console.log("CSRF recupérée : " + csrf);
+        console.log(csrf);
 
         const response = await axios.get('https://backend.streetweb.fr/api/user', { 
             withCredentials: true 
