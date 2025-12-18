@@ -5,11 +5,11 @@ axios.defaults.withCredentials = true;
 
 export async function isUserConnected() {
     try {
-        await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', { 
+        const csrf = await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', { 
             withCredentials: true 
         });
 
-        console.log("CSRF recupérée")
+        console.log("CSRF recupérée : " + csrf);
 
         const response = await axios.get('https://backend.streetweb.fr/api/user', { 
             withCredentials: true 
