@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 
+import { Loading } from '../components/Loading.jsx';
 import { Footer } from '../components/footer.jsx';
 import { FriendsList } from '../components/FriendsList.jsx';
 import { PopUp } from '../components/PopUp.jsx';
@@ -14,10 +15,7 @@ import { scanCodeFile } from '../modules/scanCodeFile.jsx';
 import { addFriend } from '../modules/addFriend.jsx';
 
 function Home() {
-    const navigate = useNavigate();
-
     const [isLoading, setIsLoading] = useState(true);
-    const [isPlaying, setIsPlaying] = useState(false);
 
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isScannerOpen, setScannerOpen] = useState(false);
@@ -61,7 +59,9 @@ function Home() {
 
             if (userData) {
                 setUser(userData);
+                setIsLoading(false);
             }
+
             else {
                 console.log("Failed to get user data.");
             }
@@ -71,7 +71,7 @@ function Home() {
     }, []);
 
     if (isLoading) {
-        return <div>Chargement de la page...</div>;
+        return <Loading />;
     }
 
     return (

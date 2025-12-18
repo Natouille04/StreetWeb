@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import QRious from "qrious"; 
+import QRious from "qrious";
 
 /**
  * @param {object} props
@@ -9,26 +9,30 @@ function QrCode({ data, size }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        if (canvasRef.current && data) {
+        if (!canvasRef.current || !data) return;
+
+        const timeout = setTimeout(() => {
             new QRious({
-                element: canvasRef.current, 
-                value: data, 
+                element: canvasRef.current,
+                value: data,
                 size: size ?? 160,
-                foreground: '#000000',   
-                background: '#ffffff', 
-                level: 'H' 
+                foreground: '#000000',
+                background: '#ffffff',
+                level: 'H'
             });
-        } 
-        
-        else if (canvasRef.current) {
-             const ctx = canvasRef.current.getContext('2d');
-             ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        }
-        
-    }, [data]);
+        }, 0); // permet au canvas de “layout” avant le dessin
+
+        return () => clearTimeout(timeout);
+    }, [data, size]);
 
     return (
-        <canvas ref={canvasRef} id="qr-canvas-display" /> 
+        <canvas
+            ref={canvasRef}
+            id="qr-canvas-display"
+            width={size ?? 160}
+            height={size ?? 160}
+            className="block"
+        />
     );
 }
 
