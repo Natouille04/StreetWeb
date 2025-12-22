@@ -1,4 +1,3 @@
-import React from "react";
 import { LoaderMii } from "./LoaderMii.jsx";
 
 function Loading({ text = "Loading..." }) {

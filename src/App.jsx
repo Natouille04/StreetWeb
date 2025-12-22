@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/auth/Login.jsx"
 import Register from "./pages/auth/Register.jsx";
+import MiiEditor from "./pages/MiiEditor.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,16 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/editor"
+          element={
+            <ProtectedRoute>
+              <MiiEditor />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

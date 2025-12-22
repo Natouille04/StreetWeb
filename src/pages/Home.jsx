@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from 'react';
 
 import { Loading } from '../components/Loading.jsx';
 import { Footer } from '../components/footer.jsx';
@@ -9,7 +8,6 @@ import { QrCode } from '../components/QrCode.jsx';
 import { CameraScanner } from '../components/CameraScanner.jsx';
 import { ProfilePopUp } from '../components/PopUp.jsx';
 
-import { isUserConnected } from '../modules/isUserConnected.jsx';
 import { getUserInfo } from '../modules/getUserInfo.jsx';
 import { scanCodeFile } from '../modules/scanCodeFile.jsx';
 import { addFriend } from '../modules/addFriend.jsx';
@@ -18,6 +16,7 @@ function Home() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isProfileOpen, setProfileOpen] = useState(false);
     const [isScannerOpen, setScannerOpen] = useState(false);
 
     const [user, setUser] = useState(null);
@@ -35,7 +34,7 @@ function Home() {
             console.log("No file was selected.");
             return;
         }
-        
+
         scanCodeFile(file)
             .then(result => {
                 console.log("QR Code Text:", result);
@@ -43,7 +42,7 @@ function Home() {
             })
             .then(() => {
                 console.log("Ami ajouté avec succès.");
-                setPopupOpen(false); 
+                setPopupOpen(false);
             })
             .catch(error => {
                 console.error("Erreur lors de l'ajout de l'ami:", error);
@@ -79,7 +78,7 @@ function Home() {
             <div className="w-full h-full bg-green-500 background-grass flex justify-center items-start">
                 <FriendsList reloadKey={reloadFriendsKey} />
             </div>
-            <Footer setPopupOpen={setPopupOpen} />
+            <Footer setPopupOpen={setPopupOpen} setProfileOpen={setProfileOpen} />
 
             {isPopupOpen && (
                 <PopUp title="Add friends" onClose={() => setPopupOpen(false)}>
@@ -136,7 +135,9 @@ function Home() {
                 </PopUp>
             )}
 
-            {/* <ProfilePopUp /> */}
+            {isProfileOpen && (
+                <ProfilePopUp title={user.name} miiData={user.miiData} onClose={() => setProfileOpen(false)} />
+            )}
         </div>
     );
 }

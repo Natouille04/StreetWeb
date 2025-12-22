@@ -1,10 +1,9 @@
-import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
-function Footer({ setPopupOpen }) {
+function Footer({ setPopupOpen, setProfileOpen }) {
     const navigate = useNavigate();
 
     const LogOut = async () => {
@@ -30,7 +29,7 @@ function Footer({ setPopupOpen }) {
                     <p className="flex items-center text-3xl pb-1">+</p>
                 </div>
 
-                <i onClick={() => setProfilePopupOpen(true)} className="h-full ri-user-fill text-white text-3xl"></i>
+                <i onClick={() => setProfileOpen(true)} className="h-full ri-user-fill text-white text-3xl"></i>
                 <i onClick={() => LogOut()} className=" h-full ri-logout-box-fill text-white text-3xl"></i>
             </nav>
         </div>

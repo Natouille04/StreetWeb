@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Mii from "@pretendonetwork/mii-js";
 
 function base64ToArrayBuffer(base64) {
@@ -9,30 +8,25 @@ function base64ToArrayBuffer(base64) {
     return buffer.buffer;
 }
 
-function MiiRender({ miiData = null, name}) {
+function MiiRender({ miiData = null, name = "mii", body = "face" }) {
     if (miiData == null) {
         return (
-            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50 ZoomIn">
-                <div className="w-85/100 h-85/100 bg-white rounded-lg">
-                    <img className="h-full w-full" src="images/BaseMiiHead.png" alt={name}></img>
-                </div>
-            </div>
+            <img className="h-full w-full object-cover" src="images/BaseMiiHead.png" alt={name}></img>
         );
     }
 
     else {
         const buffer = base64ToArrayBuffer(miiData);
         const mii = new Mii(buffer);
-        const studioUrl = mii.studioUrl();
+        const studioUrl = mii.studioUrl({
+            width: 512,
+            type: body
+        });
 
         return (
-            <div className="w-25 h-25 bg-gray-300/60 rounded-lg flex justify-center items-center shadow-xl/50 ZoomIn">
-                <div className="w-85/100 h-85/100 bg-white rounded-lg">
-                    <img className="h-full w-full" src={studioUrl} alt={name}></img>
-                </div>
-            </div>
+            <img className="h-full w-full object-cover" src={studioUrl} alt={name}></img>
         );
     }
 }
 
-export { MiiRender };
+export { MiiRender, base64ToArrayBuffer };
