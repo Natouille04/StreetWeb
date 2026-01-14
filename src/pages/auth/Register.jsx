@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Mii from '@pretendonetwork/mii-js';
+
+import { base64ToArrayBuffer } from "../../components/MiiRender";
 
 axios.defaults.baseURL = 'https://backend.streetweb.fr/';
 axios.defaults.withCredentials = true;
@@ -14,6 +17,7 @@ function Register() {
         password: '',
         confirmPassword: ''
     });
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,17 +36,23 @@ function Register() {
 
     const validateForm = () => {
         const newErrors = {};
+
         if (!formData.username) {
             newErrors.username = "Le nom d'utilisateur est requis.";
         }
+
         if (!formData.email) {
             newErrors.email = "L'email est requis.";
         }
+
         if (!formData.password) {
             newErrors.password = "Le mot de passe est requis.";
-        } else if (formData.password.length < 8) {
+        }
+
+        else if (formData.password.length < 8) {
             newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
         }
+
         if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
         }
@@ -61,14 +71,25 @@ function Register() {
         setIsSubmitting(true);
         setErrors({});
 
+        const DupeMii = new Mii(
+            base64ToArrayBuffer("AwEAMMaKAO9XzBI0gP9wmXzr1MnDFgAAAABCAGEAcwBlAAAAAAAAAAAAAAAAAEBAAAAhAQJoRBgmNEYUgRIXZgwAACkAUkhQbgBhAHQAAAAAAAAAAAAAAAAAAAAAAHkJ")
+        );
+
+        const JsonMiiObj = JSON.stringify(DupeMii);
+        const base64 = btoa(encodeURIComponent(JsonMiiObj));
+
         try {
             await axios.get('/sanctum/csrf-cookie', {
                 withCredentials: true
             });
 
+            console.log(base64);
+
             const response = await axios.post('/register', {
                 name: formData.username,
                 email: formData.email,
+                miiData: base64,
+                genre: 0,
                 password: formData.password,
                 password_confirmation: formData.confirmPassword
             });
@@ -81,7 +102,9 @@ function Register() {
                 setErrors({ general: "Réponse du serveur inattendue lors de l'inscription." });
             }
 
-        } catch (error) {
+        } 
+        
+        catch (error) {
             if (error.response) {
                 if (error.response.status === 422) {
                     const validationErrors = error.response.data.errors;
@@ -100,10 +123,14 @@ function Register() {
                     setErrors(newErrors);
                     setErrors({ general: generalMessage });
 
-                } else {
+                } 
+                
+                else {
                     setErrors({ general: `Erreur de serveur: ${error.response.status}` });
                 }
-            } else {
+            } 
+            
+            else {
                 setErrors({ general: "Impossible de se connecter au serveur." });
                 console.error("Erreur réseau:", error);
             }

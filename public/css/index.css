@@ -2,6 +2,16 @@
 @import "remixicon/fonts/remixicon.css";
 @import "./animations/ZoomIn.css";
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.root {
+  height: 100dvh; /* important */
+  overflow-y: auto;
+}
+
 .background-grass {
     background-image: url(/images/background.jpg);
     background-size: cover;
