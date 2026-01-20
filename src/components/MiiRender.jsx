@@ -8,6 +8,17 @@ function base64ToArrayBuffer(base64) {
     return buffer.buffer;
 }
 
+function uint8ToBase64(uint8) {
+  let binary = '';
+  const chunk = 0x8000;
+
+  for (let i = 0; i < uint8.length; i += chunk) {
+    binary += String.fromCharCode(...uint8.subarray(i, i + chunk));
+  }
+
+  return btoa(binary);
+}
+
 function MiiRender({ miiData = null, name = "mii", body = "face" }) {
     if (miiData == null) {
         return (
@@ -29,4 +40,4 @@ function MiiRender({ miiData = null, name = "mii", body = "face" }) {
     }
 }
 
-export { MiiRender, base64ToArrayBuffer };
+export { MiiRender, base64ToArrayBuffer, uint8ToBase64 };

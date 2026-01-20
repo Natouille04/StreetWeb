@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import Mii from "@pretendonetwork/mii-js";
-import { Buffer } from "buffer";
+import axios from 'axios';
 
 import { Loading } from "../components/Loading.jsx";
-import { MiiRender, base64ToArrayBuffer } from "../components/MiiRender.jsx";
+import { base64ToArrayBuffer, uint8ToBase64 } from "../components/MiiRender.jsx";
 import { PartsBtn } from "../components/PartsBtn.jsx";
 
 import { getUserInfo } from "../modules/getUserInfo.jsx";
@@ -97,10 +97,18 @@ export default function MiiEditor() {
         <div className="relative h-screen">
             <div className="absolute top-0 w-full h-15 p-2 flex justify-end">
                 <button className="w-30/100 h-full rounded bg-linear-to-r to-sky-300 from-sky-500 font-bold" onClick={() => {
-                    const JsonMiiObj = JSON.stringify(UserMii);
-                    const base64 = btoa(encodeURIComponent(JsonMiiObj));
+                    UserMii.miiName = "abcdefghij";
+                    UserMii.creatorName = "abcdefghij";
 
-                    console.log(base64);
+                    axios.post('https://backend.streetweb.fr/api/users/updateMii',
+                        {
+                            identifier: user.identifier.toString(),
+                            miiData: uint8ToBase64(UserMii.encode())
+                        },
+                        {
+                            withCredentials: true
+                        }
+                    );
                 }}>Save</button>
             </div>
 

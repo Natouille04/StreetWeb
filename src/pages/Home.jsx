@@ -12,6 +12,10 @@ import { getUserInfo } from '../modules/getUserInfo.jsx';
 import { scanCodeFile } from '../modules/scanCodeFile.jsx';
 import { addFriend } from '../modules/addFriend.jsx';
 
+import { base64ToArrayBuffer, uint8ToBase64 } from '../components/MiiRender.jsx';
+
+import Mii from '@pretendonetwork/mii-js';
+
 function Home() {
     const [isLoading, setIsLoading] = useState(true);
 
