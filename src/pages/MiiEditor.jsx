@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Mii from "@pretendonetwork/mii-js";
 import axios from 'axios';
 
@@ -9,6 +10,8 @@ import { PartsBtn } from "../components/PartsBtn.jsx";
 import { getUserInfo } from "../modules/getUserInfo.jsx";
 
 export default function MiiEditor() {
+    const navigate = useNavigate();
+
     const [user, setUser] = useState(null);
     const [userImg, setUserImg] = useState(null);
     const [partsId, setPartsId] = useState(0);
@@ -109,6 +112,8 @@ export default function MiiEditor() {
                             withCredentials: true
                         }
                     );
+
+                    navigate("/");
                 }}>Save</button>
             </div>
 

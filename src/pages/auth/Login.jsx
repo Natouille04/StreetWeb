@@ -5,7 +5,6 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://backend.streetweb.fr/';
 axios.defaults.withCredentials = true;
 
-
 function Login() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
