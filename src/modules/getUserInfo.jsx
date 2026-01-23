@@ -2,6 +2,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 /**
  * @returns {Promise<object|null>} Resolves with user data on success, or null on failure.
@@ -13,11 +14,11 @@ export async function getUserInfo(identifier = null) {
     }
 
     try {
-        await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', { 
+        await axios.get(apiUrl + '/sanctum/csrf-cookie', { 
             withCredentials: true 
         });
 
-        const response = await axios.get('https://backend.streetweb.fr/api/user', { 
+        const response = await axios.get(apiUrl + '/api/user', { 
             withCredentials: true
         });
 

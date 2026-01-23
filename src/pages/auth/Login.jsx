@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://backend.streetweb.fr/';
+const apiUrl = import.meta.env.VITE_API_URL;
+
+axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;
 
 function Login() {

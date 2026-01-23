@@ -3,16 +3,17 @@ import { getUserInfo } from "./getUserInfo";
 
 axios.defaults.withCredentials = true;
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 async function addFriend(identifier) {
-    await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {
+    await axios.get(apiUrl + '/sanctum/csrf-cookie', {
         withCredentials: true
     });
 
     const userInfo = await getUserInfo();
 
     return axios.post(
-        'https://backend.streetweb.fr/api/relations/create',
+        apiUrl + '/api/relations/create',
         {
             user_id: userInfo.identifier.toString(),
             friend_id: identifier.toString()

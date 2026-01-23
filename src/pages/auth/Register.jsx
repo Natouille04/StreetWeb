@@ -5,9 +5,10 @@ import Mii from '@pretendonetwork/mii-js';
 
 import { base64ToArrayBuffer } from "../../components/MiiRender";
 
-axios.defaults.baseURL = 'https://backend.streetweb.fr/';
-axios.defaults.withCredentials = true;
+const apiUrl = import.meta.env.VITE_API_URL;
 
+axios.defaults.baseURL = apiUrl;
+axios.defaults.withCredentials = true;
 
 function Register() {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ function Register() {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [gender, setGender] = useState(0);
 
     const handleChange = (e) => {
         setFormData({
@@ -89,7 +91,7 @@ function Register() {
                 name: formData.username,
                 email: formData.email,
                 miiData: base64,
-                genre: 0,
+                genre: gender,
                 password: formData.password,
                 password_confirmation: formData.confirmPassword
             });
@@ -102,12 +104,14 @@ function Register() {
                 setErrors({ general: "Réponse du serveur inattendue lors de l'inscription." });
             }
 
-        } 
-        
+        }
+
         catch (error) {
             if (error.response) {
                 if (error.response.status === 422) {
+                    const newErrors = {};
                     const validationErrors = error.response.data.errors;
+                    
                     let generalMessage = "Veuillez corriger les erreurs ci-dessous.";
 
                     if (validationErrors.email) {
@@ -120,16 +124,18 @@ function Register() {
                         newErrors.password = validationErrors.password[0];
                         newErrors.confirmPassword = newErrors.password;
                     }
-                    setErrors(newErrors);
-                    setErrors({ general: generalMessage });
 
-                } 
-                
+                    setErrors({
+                        ...newErrors,
+                        general: generalMessage
+                    })
+                }
+
                 else {
                     setErrors({ general: `Erreur de serveur: ${error.response.status}` });
                 }
-            } 
-            
+            }
+
             else {
                 setErrors({ general: "Impossible de se connecter au serveur." });
                 console.error("Erreur réseau:", error);
@@ -173,7 +179,7 @@ function Register() {
                     <div className="flex flex-col">
                         <label htmlFor="email" className='text-sm font-medium text-gray-700 mb-1'>Email</label>
                         <input
-                            type="text"
+                            type="email"
                             id="email"
                             value={formData.email}
                             onChange={handleChange}
@@ -210,6 +216,16 @@ function Register() {
                         {errors.confirmPassword && <p className='text-red-500 text-xs mt-1'>{errors.confirmPassword}</p>}
                     </div>
 
+                    <div className="flex flex-row justify-between">
+                        <button type='button' onClick={() => setGender(0)} className={`w-1/2 flex flex-row justify-center text-xl border-2 border-r-0 rounded-tl-xl rounded-bl-xl ${gender === 0 ? "text-blue-500" : "text-gray-400"}`} >
+                            <i className="ri-men-fill"></i>
+                        </button>
+
+                        <button type='button' onClick={() => setGender(1)} className={`w-50/100 flex flex-row justify-center text-xl border-2 border-l-1 rounded-tr-xl rounded-br-xl ${gender === 1 ? "text-red-500" : "text-gray-400"}`} >
+                            <i className="ri-women-fill"></i>
+                        </button>
+                    </div>
+
                     <button
                         type='submit'
                         disabled={isSubmitting}
@@ -225,9 +241,9 @@ function Register() {
                     >
                         Login
                     </button>
-                </div>
-            </form>
-        </div>
+                </div >
+            </form >
+        </div >
     );
 }
 

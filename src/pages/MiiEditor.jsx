@@ -9,6 +9,8 @@ import { PartsBtn } from "../components/PartsBtn.jsx";
 
 import { getUserInfo } from "../modules/getUserInfo.jsx";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function MiiEditor() {
     const navigate = useNavigate();
 
@@ -103,7 +105,7 @@ export default function MiiEditor() {
                     UserMii.miiName = "abcdefghij";
                     UserMii.creatorName = "abcdefghij";
 
-                    axios.post('https://backend.streetweb.fr/api/users/updateMii',
+                    axios.post(apiUrl + '/api/users/updateMii',
                         {
                             identifier: user.identifier.toString(),
                             miiData: uint8ToBase64(UserMii.encode())

@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function Footer({ setPopupOpen, setProfileOpen }) {
     const navigate = useNavigate();
 
     const LogOut = async () => {
         try {
-            await axios.get('https://backend.streetweb.fr/sanctum/csrf-cookie', {withCredentials: true});
-            await axios.post('https://backend.streetweb.fr/logout', {withCredentials: true});
+            await axios.get(apiUrl + '/sanctum/csrf-cookie', {withCredentials: true});
+            await axios.post(apiUrl + '/logout', {withCredentials: true});
             navigate('/login');
         }
 
